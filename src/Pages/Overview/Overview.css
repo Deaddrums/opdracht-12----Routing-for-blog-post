@@ -1,0 +1,12 @@
+.allBlogs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.allBlogsContainer {
+    gap: 20px;
+    padding: 50px;
+    width: 50%;
+}
