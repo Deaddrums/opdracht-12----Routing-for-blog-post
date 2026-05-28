@@ -24,7 +24,6 @@ function NewPost() {
     const comments = 0
     const shares = 0
 
-
     return <>
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="formWrapper">
