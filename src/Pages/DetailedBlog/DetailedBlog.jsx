@@ -2,11 +2,33 @@ import './DetailedBlog.css'
 import {Link, useParams} from "react-router-dom";
 import data from "../../constants/data.json"
 import DateFormatter from "../../Helpers/DateFormatter/DateFormatter.jsx";
+import {useEffect} from "react";
+import axios from "axios";
 
 function DetailedBlog() {
     const {id} = useParams();
-
     const blog = data.find(item => item.id === Number(id))
+
+    useEffect(() => {
+        async function fetchPosts() {
+            toggleError(false)
+            try {
+                const allPosts = await axios.get("https://novi-backend-api-wgsgz.ondigitalocean.app/api/blogposts", {
+                    headers: {
+                        'novi-education-project-id': "6dc266a5-f7e7-48b9-b611-ba16d2a28f65"
+                    }
+                })
+                console.log(allPosts.data)
+                setPost(allPosts.data)
+            } catch (e) {
+                console.error(e)
+                toggleError(true)
+            }
+
+        }
+
+        fetchPosts();
+    }, []);
 
     if (!blog) {
         return <>
