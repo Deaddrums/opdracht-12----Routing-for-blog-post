@@ -1,33 +1,32 @@
 import './NewPost.css'
-import {useForm} from "react-hook-form";
-import ReadtimeCalculator from "../../Helpers/ReadtimeCalculator/ReadtimeCalculator.jsx";
+// import {useForm} from "react-hook-form";
+// import ReadtimeCalculator from "../../Helpers/ReadtimeCalculator/ReadtimeCalculator.jsx";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useState} from "react";
 
 function NewPost() {
-    const {register, handleSubmit, watch} = useForm();
+   const [formData, setFormData] = useState({
+       title: '',
+       subtitle: '',
+       content: '',
+       created: 0,
+       author: '',
+       readTime: '',
+       comments: 0,
+       shares: 0
+   })
     const navigate = useNavigate();
-    const onSubmit = async (data) => {
+     async function handleSubmit() {
 
-        const postText = watch("content") || "";
-        const readTime = ReadtimeCalculator(postText);
-        const result = {
-            title: data.title,
-            subtitle: data.subtitle,
-            content: data.content,
-            created: 0,
-            author: data.author,
-            readTime: readTime,
-            comments: 0,
-            shares: 0
-        };
-
+        // const postText = watch("content") || "";
+        // const readTime = ReadtimeCalculator(postText);
 
 
         try {
             const response = await axios.post(
                 "https://novi-backend-api-wgsgz.ondigitalocean.app/api/blogposts",
-                result,
+                formData,
                 {
                     headers: {
                         'novi-education-project-id': "6dc266a5-f7e7-48b9-b611-ba16d2a28f65"
@@ -43,41 +42,45 @@ function NewPost() {
             console.error("Fout bij posten:", error);
         }
 
-        console.log(result);
+        console.log('yo');
     }
 
     // const comments = 0
     // const shares = 0
 
     return <>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
             <div className="formWrapper">
                 <input
                     type="text"
                     placeholder="Titel"
-                    id="title"
-                    {...register("title")}
+                    name="title"
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    value={formData.title}
                 />
 
                 <input
                     type="text"
                     placeholder="Subtitel"
-                    id="subTitle"
-                    {...register("subTitle")}
+                    name="subtitle"
+                    onChange={(e) => setFormData({...formData, subtitle: e.target.value})}
+                    value={formData.subtitle}
                 />
                 <input
                     type="text"
                     placeholder="Auteur"
-                    id="author"
-                    {...register("author")}
+                    name="author"
+                    onChange={(e) => setFormData({...formData, author: e.target.value})}
+                    value={formData.author}
                 />
                 <textarea
 
                     placeholder="Type hier je bericht"
-                    id="content"
                     minLength='300'
                     maxLength='2000'
-                    {...register("post")}
+                    name="content"
+                    onChange={(e) => setFormData({...formData, content: e.target.value})}
+                    value={formData.content}
                 />
 
                 <button type="submit">Submit</button>
