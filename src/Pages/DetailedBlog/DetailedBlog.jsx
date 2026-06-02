@@ -7,7 +7,6 @@ import axios from "axios";
 
 function DetailedBlog() {
     const {id} = useParams();
-    const blog = data.find(item => item.id === Number(id))
     const [post, setPost] = useState([])
     const [error, toggleError] = useState(false)
 
@@ -33,7 +32,7 @@ function DetailedBlog() {
         fetchPost();
     }, []);
 
-    if (!blog) {
+    if (!post) {
         return <>
             <div className="errorWrapper">
                 <div className="errorContainer">
@@ -72,7 +71,7 @@ function DetailedBlog() {
                         </h3>
                     </div>
 
-                {error && (<p>Oops! Foutje! Kan gebeuren baas</p>)}
+                {error && <p>Oops! Foutje! Kan gebeuren baas</p>}
             </div>
         </div>
     </>
