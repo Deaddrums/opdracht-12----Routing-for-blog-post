@@ -12,16 +12,17 @@ function DetailedBlog() {
     const [error, toggleError] = useState(false)
 
     useEffect(() => {
-        async function fetchPosts() {
+        async function fetchPost() {
             toggleError(false)
             try {
-                const allPosts = await axios.get("https://novi-backend-api-wgsgz.ondigitalocean.app/api/blogposts", {
+                console.log(id)
+                const result = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/blogposts/${id}`, {
                     headers: {
                         'novi-education-project-id': "6dc266a5-f7e7-48b9-b611-ba16d2a28f65"
                     }
                 })
-                console.log(allPosts.data)
-                setPost(allPosts.data)
+                // console.log(result.data)
+                setPost(result.data)
             } catch (e) {
                 console.error(e)
                 toggleError(true)
@@ -29,7 +30,7 @@ function DetailedBlog() {
 
         }
 
-        fetchPosts();
+        fetchPost();
     }, []);
 
     if (!blog) {
@@ -51,7 +52,7 @@ function DetailedBlog() {
         <div className="blogWrapper">
             <div className="blogContainer">
 
-                {post.map((post) => (
+
                     <div key={post.id}>
 
                     <h1>
@@ -70,7 +71,7 @@ function DetailedBlog() {
                             <Link to="/alle-posts">Ga terug naar het blog overzicht</Link>
                         </h3>
                     </div>
-                ))}
+
                 {error && (<p>Oops! Foutje! Kan gebeuren baas</p>)}
             </div>
         </div>

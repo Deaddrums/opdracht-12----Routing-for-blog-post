@@ -10,18 +10,18 @@ function NewPost() {
        title: '',
        subtitle: '',
        content: '',
-       created: 0,
+       created: new Date(),
        author: '',
-       readTime: '',
+       readTime: 0,
        comments: 0,
        shares: 0
    })
     const navigate = useNavigate();
-     async function handleSubmit() {
-
+     async function handleSubmit(e) {
+e.preventDefault();
         // const postText = watch("content") || "";
         // const readTime = ReadtimeCalculator(postText);
-
+console.log("hier iets")
 
         try {
             const response = await axios.post(
@@ -36,7 +36,7 @@ function NewPost() {
 
             console.log("Post succesvol:", response.data);
 
-            navigate("/");
+            // navigate("/");
 
         } catch (error) {
             console.error("Fout bij posten:", error);
